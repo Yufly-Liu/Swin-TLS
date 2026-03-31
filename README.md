@@ -1,125 +1,138 @@
-# 图像去噪网络对比系统
+# Swin-TLS: Temporal Line-Shifting with Swin Transformer for 3D Reconstruction under Strong Interreflection
 
-模块化的深度学习图像去噪对比平台，支持训练、评估和对比多个经典去噪网络。针对细线条恢复场景（黑色背景 + 白色细线条）做了专门优化。
+**Swin-TLS** is a modular deep learning processing platform developed to address the **strong interreflection** issue on highly reflective metal surfaces (e.g., deep holes, grooves) in Fringe Projection Profilometry (FPP). This project focuses entirely on the algorithmic and data-processing level, providing an end-to-end image restoration pipeline to recover pure direct radiation components from contaminated temporal line-shifting fringe images. The system supports training, evaluating, and comparing multiple classic and state-of-the-art denoising networks.
 
-## 特性
+<img src="assets/新GIF动图 (4).gif" width="300" height="300" />
 
-- 6 种去噪模型：DnCNN, U-Net, RED-Net, FFDNet, Restormer, SUNet
-- 多数据集合并训练，支持过采样/欠采样
-- Patch 训练 + 数据增强（随机裁剪、翻转、旋转）
-- 组合损失函数（模型原始损失 + WeightedMSE + 边缘保持 + Focal），阶段式权重调整
-- TensorBoard 实时监控（损失曲线、各子损失分项、PSNR/SSIM、去噪效果图）
-- 检查点保存/恢复，支持断点续训
+<img src="assets/新GIF动图 (1).gif" width="500" height="300" />
 
-## 支持的模型
+<p align="center">
+  <img src="assets/display.png" width="800">
+</p>
 
-| 模型 | 架构 | 默认损失 | 参考论文 |
-|------|------|---------|---------|
-| DnCNN | 17层CNN，残差学习 | MSE | Zhang et al., 2017 |
-| U-Net | 编码器-解码器，跳跃连接 | MSE | Ronneberger et al., 2015 |
-| RED-Net | 对称卷积-反卷积，跳跃连接 | MSE | Mao et al., 2016 |
-| FFDNet | 噪声级别自适应 | L1 | Zhang et al., 2018 |
-| Restormer | Transformer，多头转置自注意力 | Charbonnier | Zamir et al., 2022 |
-| SUNet | Swin Transformer U-Net | L1 | 官方实现 |
+## ✨ Core Features
 
-## 安装
+- **Optimized for Line-Shifting Structured Light**: By utilizing the sparse characteristics of binary multi-line patterns, the system effectively frames interreflection suppression as a deep learning-based structured noise removal task. This algorithmic choice completely bypasses the large-scale illumination aliasing common in global coding methods (e.g., Gray codes).
+- **Hybrid Dataset Support (Virtual & Real)**:
+  - **Real-captured Data**: A high-fidelity non-reflection Ground Truth (GT) acquisition strategy designed based on the reflection uniqueness of convex surfaces.
+  - **Simulated Data**: Large-scale pixel-aligned simulation datasets generated using the **Blender Cycles** path-tracing renderer by precisely controlling the number of light bounces to decouple direct and indirect illumination.
+- **Custom Composite Loss Function**: Designed for extreme class imbalance in structured light restoration (predominantly dark background, sparse bright lines). The strategy uses a **Composite Loss (Model Default + WeightedMSE + Edge-aware + Focal)** with phased weight adjustments to prevent detail loss and "brightness collapse" caused by over-suppressing large-scale highlights.
+- **Powerful Model Comparison Matrix**: Built-in support for 4 classic and frontier denoising models: **DnCNN, U-Net, FFDNet, and SUNet**. It particularly validates the superior performance of **SUNet** in modeling long-range spatial dependencies and handling high-resolution structured noise.
+- **Comprehensive Engineering Pipeline**: Supports multi-dataset merged training, oversampling/undersampling, Patch-based training, data augmentation, and integrated TensorBoard monitoring with checkpoint resume functionality.
 
-```bash
-# 克隆项目
+## 🧰 Supported Models
+
+| **Model Architecture** | **Features**                                                 | **Default Loss** | **Reference**            |
+| ---------------------- | ------------------------------------------------------------ | ---------------- | ------------------------ |
+| **DnCNN**              | 17-layer CNN, residual learning; stable for Gaussian noise.  | MSE              | Zhang et al., 2017       |
+| **U-Net**              | Encoder-decoder with skip connections; preserves multi-scale features. | MSE              | Ronneberger et al., 2015 |
+| **FFDNet**             | Noise-level-aware; high computational efficiency.            | L1               | Zhang et al., 2018       |
+| **SUNet**              | **(Recommended)** Swin Transformer U-Net; combines global modeling with local refinement, perfect for structured noise. | L1               | Official Impl.           |
+
+## 🚀 Installation
+
+Bash
+
+```
+# Clone the repository
 git clone <repo-url>
-cd mark2
+cd Swin-TLS
 
-# 创建 conda 环境
+# Create conda environment
 conda create -n IRNet python=3.10
 conda activate IRNet
 
-# 安装 PyTorch（CUDA 11.8，适配 Quadro RTX 5000）
+# Install PyTorch (CUDA 11.8, optimized for Quadro RTX 5000)
 pip install torch==2.7.1+cu118 torchvision==0.22.1+cu118 --index-url https://download.pytorch.org/whl/cu118
 
-# 安装其他依赖
+# Install other dependencies
 pip install -r requirements.txt
 ```
 
-主要依赖：PyTorch 2.7.1、TensorBoard 2.20、scikit-image 0.25、matplotlib 3.10、PyYAML 6.0、tqdm 4.67、hypothesis 6.151（测试）。完整列表见 `requirements.txt`。
+*Key dependencies: PyTorch 2.7.1, TensorBoard 2.20, scikit-image 0.25, matplotlib 3.10, PyYAML 6.0, tqdm 4.67.*
 
-## 数据集结构
+## 📁 Dataset Structure
+
+The dataset covers various surface roughness levels and machining processes (planar milling, end milling, planar grinding) for metal workpieces.
+
+*(Supported formats: PNG, JPG, BMP, TIFF - case-insensitive)*
+
+Plaintext
 
 ```
 data/
-├── aluminum/          # 铝材数据集（240张，1376×2048）
-│   ├── input/         # 噪声图像
-│   └── target/        # 干净图像
-├── iron/              # 铁材数据集（520张）
+├── aluminum/          # Aluminum 6061 (Real-captured, roughness 0.8~3.2)
+│   ├── input/         # Interreflection-polluted images
+│   └── target/        # Clean images (Synthesized via differential strategy)
+├── iron/              # 45# Carbon Steel (Various roughness and processes)
 │   ├── input/
 │   └── target/
-└── Synthesis/         # 合成数据集（911张）
-    ├── input/
-    └── target/
+└── Synthesis/         # Blender-rendered dataset (Complex geometry workpieces)
+    ├── input/         # Reflection: ON
+    └── target/        # Reflection: OFF
 ```
 
-支持格式：PNG、JPG、BMP、TIFF（大小写不敏感）。
+*Note: During training, high-resolution original images (e.g., 2048x1376) are randomly cropped into 512x512 patches to manage memory and perform data augmentation.*
 
-## 配置文件
+## ⚙️ Configuration
 
-项目提供两个通用配置文件，通过修改 `model.name` 切换模型：
+The project uses YAML configuration files. You can switch models by modifying `model.name`.
 
-| 配置文件 | 说明 |
-|---------|------|
-| `configs/config_combined_loss.yaml` | 组合损失（推荐），包含模型原始损失 + WeightedMSE + 边缘 + Focal |
-| `configs/config_default_loss.yaml` | 仅使用模型默认损失函数 |
-| `configs/config_test_loss.yaml` | 小样本快速测试用 |
+| **Config File**                     | **Description**                                              |
+| ----------------------------------- | ------------------------------------------------------------ |
+| `configs/config_combined_loss.yaml` | **Combined Loss (Recommended)**: Model Default + WeightedMSE + Edge + Focal. Optimized for extreme class imbalance. |
+| `configs/config_default_loss.yaml`  | Uses the model's standard loss function (e.g., MSE or L1).   |
+| `configs/config_test_loss.yaml`     | For quick testing with small samples.                        |
 
-切换模型只需改一行：
+**Switch models with one line:**
 
-```yaml
+YAML
+
+```
 model:
-  name: "dncnn"  # 可选: dncnn, ffdnet, rednet, restormer, sunet, unet
+  name: "sunet"  # Options: dncnn, ffdnet, sunet, unet
 ```
 
-## 使用方法
+## 💻 Usage
 
-### 训练
+**Training**
 
-```bash
-# 使用组合损失训练（推荐）
+Bash
+
+```
+# Train with Combined Loss (Recommended for fine-line restoration)
 python main.py train --config configs/config_combined_loss.yaml
 
-# 使用模型默认损失训练
+# Train with default loss
 python main.py train --config configs/config_default_loss.yaml
 
-# 从检查点恢复训练（会从断点 epoch 继续）
+# Resume training from a checkpoint
 python main.py train --config configs/config_combined_loss.yaml --resume experiments/<exp_id>/checkpoints/checkpoint_epoch_25.pth
 ```
 
-## 数据增强
+**Data Augmentation & LR Strategy**
 
-训练时自动应用以下增强（在 `data/transforms.py` 中实现）：
-- 随机裁剪（`patch_size`，默认 512×512）
-- 随机水平/垂直翻转
-- 随机 90° 旋转
-- 每张图每个 epoch 生成 `patches_per_image` 个不同的随机 patch
+- **Augmentation**: Random cropping (512x512), random horizontal/vertical flipping, and random 90° rotation.
+- **LR Scheduler**: Default uses `CosineAnnealingLR` decaying to `eta_min: 0.000001`.
 
-验证/测试时仅做 resize，不做随机增强。
+## 📊 Performance & 3D Reconstruction Results
 
-## 学习率策略
+Key metrics on the test set using the **Combined Loss** strategy:
 
-默认使用余弦退火（CosineAnnealingLR），学习率从初始值平滑衰减到 `eta_min`：
+- **SUNet\***: PSNR 25.49 dB / SSIM 0.9212 (Best performing)
+- **U-Net\***: PSNR 23.69 dB / SSIM 0.8422
 
-```yaml
-scheduler:
-  type: "CosineAnnealingLR"
-  T_max: 150        # 与 num_epochs 一致
-  eta_min: 0.000001
-```
+By inputting the network's output ("cleaned" images) into the multi-frequency heterodyne reconstruction pipeline, 3D point cloud accuracy is significantly improved. In standard metal step-block measurements, the height measurement error was reduced from **0.081mm to 0.021mm** (a **74% reduction**).
 
-也支持 ReduceLROnPlateau 和 StepLR。
+## 📂 Project Structure
 
-## 项目结构
+Plaintext
 
 ```
-├── main.py                    # 主程序入口（train/evaluate/compare）
-├── configs/                   # 配置文件
+├── main.py                    # Main entry (train/evaluate/compare)
+├── configs/                   # Configuration files
 ├── data/
-│   ├── dataset.py             # 数据集加载（多数据集合并、采样）
-│   ├── transforms.py          # 数据增强（随机裁剪、翻转、旋转）
-│   └── __init__
+│   ├── dataset.py             # Dataset loading (Merging, sampling)
+│   ├── transforms.py          # Augmentations (Crop, flip, rotate)
+│   └── __init__.py
+```
