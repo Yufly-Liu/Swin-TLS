@@ -2,12 +2,13 @@
 
 **Swin-TLS** is a modular deep learning processing platform developed to address the **strong interreflection** issue on highly reflective metal surfaces (e.g., deep holes, grooves) in Fringe Projection Profilometry (FPP). This project focuses entirely on the algorithmic and data-processing level, providing an end-to-end image restoration pipeline to recover pure direct radiation components from contaminated temporal line-shifting fringe images. The system supports training, evaluating, and comparing multiple classic and state-of-the-art denoising networks.
 
-<img src="assets/新GIF动图 (4).gif" width="300" height="300" />
-
-<img src="assets/新GIF动图 (1).gif" width="500" height="300" />
-
 <p align="center">
   <img src="assets/display.png" width="800">
+</p>
+
+<p align="center">
+  <img src="assets/compare.png" width="800">
+  <img src="assets/a.gif" width="300">
 </p>
 
 ## ✨ Core Features
