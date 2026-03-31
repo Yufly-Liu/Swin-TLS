@@ -58,3 +58,4 @@ experiments/
 .kiro/
 .pytest_cache/
 SUNet-main/README.md
+debug_*.py
