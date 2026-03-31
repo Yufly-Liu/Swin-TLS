@@ -40,8 +40,8 @@ git clone <repo-url>
 cd Swin-TLS
 
 # Create conda environment
-conda create -n IRNet python=3.10
-conda activate IRNet
+conda create -n Swin-TLS python=3.10
+conda activate Swin-TLS
 
 # Install PyTorch (CUDA 11.8, optimized for Quadro RTX 5000)
 pip install torch==2.7.1+cu118 torchvision==0.22.1+cu118 --index-url https://download.pytorch.org/whl/cu118
