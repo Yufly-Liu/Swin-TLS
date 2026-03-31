@@ -1,0 +1,30 @@
+[
+  {
+    "exp_id":"dncnn_default_loss_20260311_122409_a1efdc60",
+    "name":"dncnn_default_loss",
+    "model":"dncnn",
+    "status":"created",
+    "created_at":"2026-03-11T12:24:09.119249",
+    "best_val_psnr":21.7738702893,
+    "best_val_ssim":null,
+    "final_train_loss":0.0109982317,
+    "epochs_trained":6.0,
+    "training_time":null,
+    "model_params":null,
+    "model_name":null
+  },
+  {
+    "exp_id":"ffdnet_default_loss_20260311_193719_3a74d98a",
+    "name":"ffdnet_default_loss",
+    "model":"ffdnet",
+    "status":"completed",
+    "created_at":"2026-03-11T19:37:19.897154",
+    "best_val_psnr":22.5273473104,
+    "best_val_ssim":null,
+    "final_train_loss":0.0293748169,
+    "epochs_trained":null,
+    "training_time":90434.4593594074,
+    "model_params":569280.0,
+    "model_name":"ffdnet"
+  }
+]

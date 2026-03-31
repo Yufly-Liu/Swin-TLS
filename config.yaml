@@ -1,0 +1,43 @@
+# 图像去噪对比系统 - 默认配置文件
+
+# 数据集配置
+dataset:
+  noisy_dir: "./data/noisy"
+  clean_dir: "./data/clean"
+  train_split: 0.7
+  val_split: 0.15
+  test_split: 0.15
+  batch_size: 16
+  num_workers: 4
+
+# 模型配置
+model:
+  name: "dncnn"
+  params:
+    in_channels: 3
+    out_channels: 3
+
+# 训练配置
+training:
+  num_epochs: 100
+  learning_rate: 0.001
+  scheduler:
+    type: "ReduceLROnPlateau"
+    patience: 10
+    factor: 0.5
+  early_stopping:
+    patience: 20
+  checkpoint_dir: "./checkpoints"
+  save_frequency: 5
+
+# 评估配置
+evaluation:
+  metrics: ["psnr", "ssim", "mse"]
+  save_samples: true
+  num_samples: 10
+
+# 实验配置
+experiment:
+  name: "exp_001"
+  description: "Baseline DnCNN training"
+  output_dir: "./experiments"

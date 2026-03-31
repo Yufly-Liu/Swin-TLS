@@ -1,0 +1,64 @@
+# 测试损失函数配置 - 使用少量数据快速验证
+
+dataset:
+  datasets:
+    - noisy_dir: "./data/aluminum/input"
+      clean_dir: "./data/aluminum/target"
+      num_samples: 50
+      name: "aluminum"
+  
+  train_split: 0.7
+  val_split: 0.15
+  test_split: 0.15
+  
+  batch_size: 2
+  num_workers: 0
+  patch_size: 256  # 减小 patch 尺寸加快训练
+  use_random_crop: true
+  patches_per_image: 2
+
+model:
+  name: "dncnn"  # 使用简单的 DnCNN
+  params:
+    in_channels: 3
+    out_channels: 3
+    num_layers: 10  # 减少层数
+    num_features: 32  # 减少特征数
+
+training:
+  num_epochs: 10  # 只训练 10 个 epoch 测试
+  learning_rate: 0.001
+  
+  # 测试组合损失（带阶段式权重）
+  loss:
+    type: "combined"
+    params:
+      base_weight: 1.0               # 模型原始损失权重（自动获取）
+      foreground_weight: 10.0
+      weighted_mse_weight: 0.5       # 加权 MSE 混合系数
+      edge_weight: 0.5
+      focal_gamma: 1.5
+      focal_weight: 0.2
+      use_edge: true
+      use_focal: true
+      num_stages: 3                   # 分 3 阶段
+      stage_ratios: [0.4, 0.3, 0.3]  # 40%/30%/30%
+  
+  scheduler:
+    type: "CosineAnnealingLR"
+    T_max: 10         # 与 num_epochs 一致
+    eta_min: 0.000001 # 最低学习率
+  
+  checkpoint_dir: "./checkpoints"
+  save_frequency: 5
+  use_tensorboard: true
+
+evaluation:
+  metrics: ["psnr", "ssim", "mse"]
+  save_samples: true
+  num_samples: 5
+
+experiment:
+  name: "test_loss"
+  description: "Test combined loss function"
+  output_dir: "./experiments"

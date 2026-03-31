@@ -1,0 +1,4 @@
+# file: D:\LIUYUFEI\code\mark2\models\restormer.py
+# hypothesis_version: 6.151.9
+
+[0.001, 2.66, 'bilinear', 'dim', 'num_blocks', 'num_heads']

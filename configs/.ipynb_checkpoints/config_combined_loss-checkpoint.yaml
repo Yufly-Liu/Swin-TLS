@@ -1,0 +1,112 @@
+# 通用配置 - 组合损失（推荐用于细线条恢复）
+# 使用方法：修改 model.name 切换模型
+# 支持模型: dncnn, ffdnet, rednet, restormer, sunet, unet
+
+# 数据集配置
+dataset:
+  datasets:
+    - noisy_dir: "./data/aluminum/input"
+      clean_dir: "./data/aluminum/target"
+      num_samples: 800
+      name: "aluminum"
+    
+    - noisy_dir: "./data/iron/input"
+      clean_dir: "./data/iron/target"
+      num_samples: 1000
+      name: "iron"
+    
+    - noisy_dir: "./data/Synthesis/input"
+      clean_dir: "./data/Synthesis/target"
+      num_samples: 1200
+      name: "synthesis"
+  
+  train_split: 0.7
+  val_split: 0.15
+  test_split: 0.15
+  
+  batch_size: 4
+  num_workers: 0
+  patch_size: 512
+  use_random_crop: true
+  patches_per_image: 4
+
+# 模型配置 - 修改这里切换模型
+model:
+  name: "unet"  # 可选: dncnn, ffdnet, rednet, restormer, sunet, unet
+  
+  # 各模型参数（会根据 model.name 自动选择）
+  params:
+    # 通用参数
+    in_channels: 3
+    out_channels: 3
+    
+    # DnCNN / FFDNet / RED-Net 参数
+    num_layers: 17
+    num_features: 64
+    
+    # U-Net 参数
+    base_features: 64
+    depth: 4
+    
+    # Restormer 参数
+    dim: 48
+    num_blocks: [4, 6, 6, 8]
+    restormer_num_heads: [1, 2, 4, 8]
+    
+    # SUNet 参数（原版默认值）
+    img_size: 512
+    embed_dim: 96
+    depths: [8, 8, 8, 8]
+    sunet_num_heads: [8, 8, 8, 8]
+    window_size: 8
+    swin_patch_size: 4
+    mlp_ratio: 4.0
+    qk_scale: 8
+    drop_path_rate: 0.1
+    
+    # FFDNet 特有参数
+    noise_level: 0.1
+
+# 训练配置
+training:
+  num_epochs: 100
+  learning_rate: 0.001 # 较低的初始学习率，减少震荡
+  
+  # 组合损失 - 模型原始损失 + 针对细线条恢复的增强损失
+  # base_loss 会自动使用模型默认损失（DnCNN→MSE, FFDNet→L1, Restormer→Charbonnier 等）
+  loss:
+    type: "combined"
+    params:
+      base_weight: 1.0                # 模型原始损失权重（自动获取）
+      foreground_weight: 10.0         # 线条区域权重（10倍）
+      weighted_mse_weight: 0.5        # 加权 MSE 混合系数
+      edge_weight: 0.5                # 边缘损失最终权重
+      focal_gamma: 2.0                # Focal 参数
+      focal_weight: 0.2               # Focal 损失混合系数
+      use_edge: true
+      use_focal: False
+      num_stages: 3                   # 分 3 阶段调整边缘权重
+      stage_ratios: [0.5, 0.2, 0.3]  # 阶段占比：70%/20%/10%
+  
+  scheduler:
+    type: "CosineAnnealingLR"
+    T_max: 100        # 与 num_epochs 一致
+    eta_min: 0.000001 # 最低学习率
+    warmup_epochs: 5          # 前 5 个 epoch 线性升温
+    warmup_start_lr: 0.000001 # 从 1e-6 开始
+  
+  checkpoint_dir: "./checkpoints"
+  save_frequency: 5
+  use_tensorboard: true
+
+# 评估配置
+evaluation:
+  metrics: ["psnr", "ssim", "mse"]
+  save_samples: true
+  num_samples: 10
+
+# 实验配置
+experiment:
+  name: "combined_loss"  # 会自动变成 "{model}_combined_loss"
+  description: "Training with combined loss (weighted MSE + edge + focal)"
+  output_dir: "./experiments"

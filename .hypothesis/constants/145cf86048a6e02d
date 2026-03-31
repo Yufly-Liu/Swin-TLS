@@ -1,0 +1,4 @@
+# file: D:\LIUYUFEI\code\mark2\utils\config.py
+# hypothesis_version: 6.151.9
+
+[1e-06, 0.001, 0.15, 0.5, 0.7, 1.0, 100, '.', './checkpoints', './data/clean', './data/noisy', './experiments', '.json', '.yaml', '.yml', 'ReduceLROnPlateau', 'batch_size', 'checkpoint_dir', 'clean_dir', 'dataset', 'description', 'dncnn', 'early_stopping', 'evaluation', 'exp_001', 'experiment', 'factor', 'in_channels', 'learning_rate', 'metrics', 'model', 'mse', 'name', 'noisy_dir', 'num_epochs', 'num_samples', 'num_workers', 'out_channels', 'output_dir', 'params', 'patience', 'psnr', 'r', 'save_frequency', 'save_samples', 'scheduler', 'ssim', 'test_split', 'train_split', 'training', 'type', 'utf-8', 'val_split', 'w', '数据集划分比例不能为负数', '配置必须是字典类型', '配置文件为空']

@@ -1,0 +1,4 @@
+# file: D:\LIUYUFEI\code\mark2\models\ffdnet.py
+# hypothesis_version: 6.151.9
+
+[0.1, 'noise_level', 'num_features', 'num_layers']

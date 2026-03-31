@@ -1,0 +1,4 @@
+# file: D:\LIUYUFEI\code\mark2\data\transforms.py
+# hypothesis_version: 6.151.9
+
+[0.5, 0.8, 1.2, 180, 256, 270, 'TrainTransform', 'ValTransform']

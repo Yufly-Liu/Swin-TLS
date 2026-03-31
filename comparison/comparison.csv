@@ -1,0 +1,3 @@
+exp_id,name,model,status,created_at,best_val_psnr,best_val_ssim,final_train_loss,epochs_trained,training_time,model_params,model_name
+dncnn_default_loss_20260311_122409_a1efdc60,dncnn_default_loss,dncnn,created,2026-03-11T12:24:09.119249,21.773870289325714,,0.010998231715555968,6.0,,,
+ffdnet_default_loss_20260311_193719_3a74d98a,ffdnet_default_loss,ffdnet,completed,2026-03-11T19:37:19.897154,22.527347310384116,,0.0293748168656159,,90434.45935940742,569280.0,ffdnet

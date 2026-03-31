@@ -1,0 +1,4 @@
+# file: D:\LIUYUFEI\code\mark2\models\__init__.py
+# hypothesis_version: 6.151.9
+
+[', ', 'dncnn', 'ffdnet', 'rednet', 'restormer', 'sunet', 'unet']

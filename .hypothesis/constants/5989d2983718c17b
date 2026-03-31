@@ -1,0 +1,4 @@
+# file: D:\LIUYUFEI\code\mark2\evaluation\metrics.py
+# hypothesis_version: 6.151.9
+
+[0.0, 1e-10, 0.01, 0.03, 1.0, 1.5, 10.0, 100.0]

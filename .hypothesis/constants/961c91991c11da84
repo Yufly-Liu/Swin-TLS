@@ -1,0 +1,4 @@
+# file: D:\LIUYUFEI\code\mark2\data\dataset.py
+# hypothesis_version: 6.151.9
+
+[1e-06, 0.15, 0.7, 1.0, '.bmp', '.jpeg', '.jpg', '.png', '.tif', '.tiff', 'RGB', '划分比例不能为负数', '数据集为空，未找到有效的图像对']
