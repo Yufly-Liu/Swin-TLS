@@ -49,3 +49,5 @@ wheels/
 
 # === TensorBoard (重要，日志通常很大) ===
 events.out.tfevents.*
+experiments/*/checkpoints/tensorboard/
+events.out.tfevents*
