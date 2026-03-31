@@ -1,4 +1,0 @@
-# file: D:\LIUYUFEI\code\mark2\evaluation\evaluator.py
-# hypothesis_version: 6.151.9
-
-[0.0, 1.0, 'cpu', 'cuda', 'evaluator', 'mean', 'mse', 'psnr', 'ssim', 'std', '测试集为空，无法评估']

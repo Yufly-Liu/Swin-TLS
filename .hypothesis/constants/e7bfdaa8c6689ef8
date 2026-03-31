@@ -1,4 +1,0 @@
-# file: D:\LIUYUFEI\code\mark2\training\trainer.py
-# hypothesis_version: 6.151.9
-
-[0.0, 1e-10, 0.001, 0.01, 0.03, 0.1, 0.5, 1.0, 10.0, 100.0, 100, ' (最佳模型)', '.', './checkpoints', 'ReduceLROnPlateau', 'StepLR', 'best_model.pth', 'best_val_psnr', 'checkpoint_dir', 'config', 'cpu', 'cuda', 'epoch', 'factor', 'gamma', 'history', 'inf', 'is_best', 'learning_rate', 'lr', 'max', 'model_state_dict', 'num_epochs', 'optimizer_state_dict', 'patience', 'save_frequency', 'scheduler', 'scheduler_state_dict', 'step_size', 'train_loss', 'trainer', 'type', 'val_loss', 'val_psnr', 'val_ssim', '训练完成']

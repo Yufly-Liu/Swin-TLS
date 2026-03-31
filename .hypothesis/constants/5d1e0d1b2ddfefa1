@@ -1,4 +1,0 @@
-# file: D:\LIUYUFEI\code\mark2\utils\visualization.py
-# hypothesis_version: 6.151.9
-
-[0.0, 0.3, 1.0, 150, '.', 'Agg', 'Clean', 'Denoised', 'Epoch', 'LR', 'Learning Rate', 'Loss', 'Noisy', 'PSNR (dB)', 'SSIM', 'Train Loss', 'Training Loss', 'Val PSNR', 'Val SSIM', 'Validation PSNR', 'Validation SSIM', 'b-', 'created_at', 'epoch', 'exp_id', 'g-', 'gray', 'learning_rate', 'm-', 'model', 'name', 'off', 'r-', 'right', 'status', 'tight', 'train_loss', 'val_psnr', 'val_ssim', 'visualizer', 'y', '没有可绘制的指标列，跳过绘图', '训练历史为空，跳过绘图']

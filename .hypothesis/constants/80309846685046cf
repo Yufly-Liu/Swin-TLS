@@ -1,4 +1,0 @@
-# file: D:\LIUYUFEI\code\mark2\experiments\experiment_manager.py
-# hypothesis_version: 6.151.9
-
-['%Y%m%d_%H%M%S', '-', './experiments', '_', 'completed', 'completed_at', 'config.yaml', 'config_snapshot', 'created', 'created_at', 'cuda_available', 'exp_id', 'experiment_manager', 'gpu_count', 'gpu_name', 'hardware', 'inference_time', 'mean', 'metadata.json', 'model', 'model_params', 'name', 'platform', 'processor', 'python_version', 'r', 'results', 'results.json', 'status', 'std', 'summary.json', 'test_metrics', 'torch_version', 'training_time', 'unavailable', 'utf-8', 'w']

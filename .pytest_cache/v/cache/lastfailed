@@ -1,4 +1,0 @@
-{
-  "tests/property/test_config_properties.py::TestProperty20ConfigValidationCompleteness::test_valid_config_passes_validation": true,
-  "tests/property/test_config_properties.py::TestProperty21ConfigRoundTrip::test_roundtrip_preserves_validation": true
-}

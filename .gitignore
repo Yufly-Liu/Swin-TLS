@@ -54,3 +54,6 @@ events.out.tfevents*
 experiments/
 events.out.tfevents*
 experiments/
+.hypothesis/
+.kiro/
+.pytest_cache/
