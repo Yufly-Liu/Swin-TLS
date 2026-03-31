@@ -51,3 +51,5 @@ wheels/
 events.out.tfevents.*
 experiments/*/checkpoints/tensorboard/
 events.out.tfevents*
+experiments/
+events.out.tfevents*
