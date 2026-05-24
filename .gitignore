@@ -1,0 +1,61 @@
+# 忽略 data 文件夹及其所有内容
+data/
+datasets/
+
+# 忽略常见的大文件格式
+*.zip
+*.tar.gz
+*.pth
+*.h5
+# === Python ===
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# === IDE ===
+# PyCharm
+.idea/
+# VS Code
+.vscode/
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# === Jupyter ===
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# === Logs and databases ===
+*.log
+*.sqlite3
+
+# === TensorBoard (重要，日志通常很大) ===
+events.out.tfevents.*
+experiments/*/checkpoints/tensorboard/
+events.out.tfevents*
+experiments/
+events.out.tfevents*
+experiments/
+.hypothesis/
+.kiro/
+.pytest_cache/
+SUNet-main/README.md
+debug_*.py
