@@ -57,28 +57,29 @@ pip install -r requirements.txt
 
 *Key dependencies: PyTorch 2.7.1, TensorBoard 2.20, scikit-image 0.25, matplotlib 3.10, PyYAML 6.0, tqdm 4.67.*
 
-## 📁 Dataset Structure
+## 📥 Dataset
 
-The dataset covers various surface roughness levels and machining processes (planar milling, end milling, planar grinding) for metal workpieces.
+Training data is not included in the repository due to size. Download from cloud drive:
 
-*(Supported formats: PNG, JPG, BMP, TIFF - case-insensitive)*
+**Link**: [Baidu Netdisk]() | **Code / 提取码**: `XXXX`
 
-Plaintext
+The dataset covers metal workpieces with various surface roughness (planar milling, end milling, grinding). Supported formats: PNG, JPG, BMP, TIFF.
 
+After downloading, extract to `data/`:
 ```
 data/
 ├── aluminum/          # Aluminum 6061 (Real-captured, roughness 0.8~3.2)
 │   ├── input/         # Interreflection-polluted images
-│   └── target/        # Clean images (Synthesized via differential strategy)
-├── iron/              # 45# Carbon Steel (Various roughness and processes)
+│   └── target/        # Clean images (via differential strategy)
+├── iron/              # 45# Carbon Steel
 │   ├── input/
 │   └── target/
-└── Synthesis/         # Blender-rendered dataset (Complex geometry workpieces)
+└── Synthesis/         # Blender-rendered (Complex geometry)
     ├── input/         # Reflection: ON
     └── target/        # Reflection: OFF
 ```
 
-*Note: During training, high-resolution original images (e.g., 2048x1376) are randomly cropped into 512x512 patches to manage memory and perform data augmentation.*
+*Note: During training, images (e.g., 2048x1376) are randomly cropped into 512x512 patches.*
 
 ## ⚙️ Configuration
 
