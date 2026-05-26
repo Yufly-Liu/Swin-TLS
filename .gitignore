@@ -1,5 +1,7 @@
 # 忽略 data 文件夹及其所有内容
-data/
+data/aluminum/
+data/iron/
+data/Synthesis/
 datasets/
 
 # 忽略常见的大文件格式
