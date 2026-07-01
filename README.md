@@ -61,7 +61,7 @@ pip install -r requirements.txt
 
 Training data is not included in the repository due to size. Download from cloud drive:
 
-**Link**: [Baidu Netdisk](https://pan.quark.cn/s/cc302c8d95bc) | **Code / 提取码**: `XXXX`
+**Link**: [Kuake Netdisk](https://pan.quark.cn/s/cc302c8d95bc) | **Code / 提取码**: `XXXX`
 
 The dataset covers metal workpieces with various surface roughness (planar milling, end milling, grinding). Supported formats: PNG, JPG, BMP, TIFF.
 
